@@ -11,6 +11,13 @@ export default ({ options, nuxt, renderRoute, resources }) => async function nux
   try {
     const url = decodeURI(req.url)
     res.statusCode = 200
+
+    // eslint-disable-next-line no-console
+    console.log('YA NONCE', options.render.csp.nonceGenerator);
+    if (options.render.csp && options.render.csp.nonceGenerator) {
+      context.nonce = options.render.csp.nonceGenerator();
+    }
+
     const result = await renderRoute(url, context)
 
     // If result is falsy, call renderLoading
